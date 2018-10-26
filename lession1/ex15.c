@@ -2,13 +2,22 @@
 
 // 尝试使用传指针,打印内容
 void print_data(int *ages,int size){
-	// printf("%d\n",size );
+	printf("%p\n",ages );
 	for (int i = 0; i < size; ++i)
 	{
 		printf("<6> %d \n",ages[i]);
 	}
 	// printf("%p\n", ages);
 }
+
+// void print_names(char *names[]){
+// 	int size  = sizeof( *names) / sizeof(char* );
+// 	for (int i = 0; i < size; ++i)
+// 	{
+// 		printf("%s\n", names[i]);
+// 	}
+
+// }
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +31,8 @@ int main(int argc, char *argv[])
 
 	// 计算大小
 	int count = sizeof(ages) / sizeof(int);
+	int size = sizeof(names) / sizeof(char*);
+	printf("names size %d\n", size);
 	int i = 0;
 	// 遍历i索引数组
 	for (int i = 0; i < count; ++i)
@@ -75,6 +86,7 @@ int main(int argc, char *argv[])
 
 	printf("------------------\n");
 	print_data(ages,count);
+	// print_names(names);
 
 
 	return 0;

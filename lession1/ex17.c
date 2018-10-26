@@ -4,10 +4,11 @@
 #include <errno.h>
 #include <string.h>
 
+// 设置文档大小
 #define MAX_DATA 512
 #define MAX_ROWS 10
 
-
+// 结构体 数据结构
 struct Address {
     int id;
     int set;
@@ -16,17 +17,24 @@ struct Address {
 
 };
 
+// 结构体 数据库
 struct Database {
+    // Address类型的数组
     struct Address rows[MAX_ROWS];
 };
 
+// 连接 结构体
 struct Connection {
+    // 文件操作指针?
     FILE *file;
+    // 指向数据库结构体指针
     struct Database *db;
 };
 
+// 失败就让它直接崩溃
 void die(const char *message) {
     if (errno) {
+        // 不清楚到底什么情况会出发这种情况的错误?
         perror(message);
     } else {
         printf("ERROR: %s \n", message);
@@ -35,15 +43,19 @@ void die(const char *message) {
     exit(1);
 }
 
+// 打印一行数据记录
 void Address_print(struct Address *addr) {
     printf("%d %s %s\n", addr->id, addr->name, addr->email);
 }
-
+// 读取数据库文件中的数据
 void Database_load(struct Connection *conn) {
+    // 从文件流中读取数据
     int rc = fread(conn->db, sizeof(struct Database), 1, conn->file);
+    //  读取失败的话,那么直接结束.
     if (rc != 1) die("Faild to load Database.");
 }
 
+// 
 struct Connection *Database_open(const char *filename, char mode) {
     struct Connection *conn = malloc(sizeof(struct Connection));
     if (!conn) die("Memory ERROR");
